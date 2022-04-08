@@ -9,6 +9,7 @@ import com.thylovezj.mall.model.pojo.Category;
 import com.thylovezj.mall.model.pojo.User;
 import com.thylovezj.mall.model.request.AddCategoryReq;
 import com.thylovezj.mall.model.request.UpdateCategoryReq;
+import com.thylovezj.mall.model.vo.CategoryVO;
 import com.thylovezj.mall.service.CategoryService;
 import com.thylovezj.mall.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 /***
  * 目录Controller
@@ -38,7 +40,7 @@ public class CategoryController {
     @ResponseBody
     public ApiRestResponse addCategory(HttpSession session, @Valid @RequestBody AddCategoryReq addCategoryReq) {
         User user = (User) session.getAttribute(Constant.THYLOVEZJ_MALL_USER);
-        if (user==null){
+        if (user == null) {
             return ApiRestResponse.error(ThylovezjMallExceptionEnum.NEED_LOGIN);
         }
         //校验是否是管理员
@@ -52,15 +54,15 @@ public class CategoryController {
 
     @PostMapping("/admin/category/update")
     @ResponseBody
-    public ApiRestResponse updateCategory(@Valid @RequestBody UpdateCategoryReq updateCategoryReq,HttpSession session){
+    public ApiRestResponse updateCategory(@Valid @RequestBody UpdateCategoryReq updateCategoryReq, HttpSession session) {
         User user = (User) session.getAttribute(Constant.THYLOVEZJ_MALL_USER);
-        if (user==null){
+        if (user == null) {
             return ApiRestResponse.error(ThylovezjMallExceptionEnum.NEED_LOGIN);
         }
         //校验是否是管理员
         if (userService.checkAdminRole(user)) {
             Category category = new Category();
-            BeanUtils.copyProperties(updateCategoryReq,category);
+            BeanUtils.copyProperties(updateCategoryReq, category);
             categoryService.update(category);
             return ApiRestResponse.success();
         } else {
@@ -71,7 +73,7 @@ public class CategoryController {
     @ApiOperation("后台删除目录")
     @PostMapping("/admin/category/delete")
     @ResponseBody
-    public ApiRestResponse deleteCategory(@RequestParam Integer id){
+    public ApiRestResponse deleteCategory(@RequestParam Integer id) {
         categoryService.delete(id);
         return ApiRestResponse.success();
     }
@@ -80,10 +82,17 @@ public class CategoryController {
     @ApiOperation("后台目录列表")
     @PostMapping("/admin/category/list")
     @ResponseBody
-    public ApiRestResponse listCategoryForAdmin(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+    public ApiRestResponse listCategoryForAdmin(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
         PageInfo pageInfo = categoryService.listForAdmin(pageNum, pageSize);
         return ApiRestResponse.success(pageInfo);
     }
 
 
+    @ApiOperation("前台目录列表")
+    @PostMapping("/category/list")
+    @ResponseBody
+    public ApiRestResponse listCategoryForAdmin() {
+        List<CategoryVO> categoryVOS = categoryService.listCategoryForCustomer();
+        return ApiRestResponse.success(categoryVOS);
+    }
 }

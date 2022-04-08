@@ -121,8 +121,14 @@
         where name = #{name,jdbcType=VARCHAR}
     </select>
     <select id="selectList" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/>
+        select
+        <include refid="Base_Column_List"/>
         from imooc_mall_category
     </select>
-
+    <select id="selectCategoriesByParentId" resultMap="BaseResultMap" parameterType="int">
+        select
+        <include refid="Base_Column_List"/>
+        from imooc_mall_category
+        where parent_id = #{parentId}
+    </select>
 </mapper>

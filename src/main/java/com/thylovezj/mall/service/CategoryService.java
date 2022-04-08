@@ -3,7 +3,10 @@ package com.thylovezj.mall.service;
 import com.github.pagehelper.PageInfo;
 import com.thylovezj.mall.model.pojo.Category;
 import com.thylovezj.mall.model.request.AddCategoryReq;
+import com.thylovezj.mall.model.vo.CategoryVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface CategoryService {
@@ -16,4 +19,8 @@ public interface CategoryService {
     void delete(Integer id);
 
     PageInfo listForAdmin(Integer pageNum, Integer pageSize);
+
+    List<CategoryVO> listCategoryForCustomer();
+
+    void recursivelyFindCategories(List<CategoryVO> categoryVOArrayList, Integer parentId);
 }
