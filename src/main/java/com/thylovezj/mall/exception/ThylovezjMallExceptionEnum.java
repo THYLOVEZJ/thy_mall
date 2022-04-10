@@ -13,8 +13,11 @@ public enum ThylovezjMallExceptionEnum {
     NAME_NOT_NULL(10010, "名字不能为空"),
     CREATE_FAILED(10011, "新增失败"),
     REQUEST_PARAM_ERROR(10012, "参数错误"),
+    MKDIR_FAILED(10014, "文件夹创建失败"),
     DELETE_FAILED(10013, "删除失败"),
+    UPLOAD_FAILED(10015, "图片上传失败"),
     NEED_ADMIN(10009, "无管理员权限");
+
     Integer code;
     String msg;
 

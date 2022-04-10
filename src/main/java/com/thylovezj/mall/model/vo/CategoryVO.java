@@ -1,11 +1,15 @@
 package com.thylovezj.mall.model.vo;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CategoryVO {
+/***
+ * 这里需要实现Serializable以实现缓存
+ */
+public class CategoryVO implements Serializable {
     private Integer id;
 
     private String name;
