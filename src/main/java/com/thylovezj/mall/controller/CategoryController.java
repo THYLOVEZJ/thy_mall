@@ -92,7 +92,7 @@ public class CategoryController {
     @PostMapping("/category/list")
     @ResponseBody
     public ApiRestResponse listCategoryForAdmin() {
-        List<CategoryVO> categoryVOS = categoryService.listCategoryForCustomer();
+        List<CategoryVO> categoryVOS = categoryService.listCategoryForCustomer(0);
         return ApiRestResponse.success(categoryVOS);
     }
 }

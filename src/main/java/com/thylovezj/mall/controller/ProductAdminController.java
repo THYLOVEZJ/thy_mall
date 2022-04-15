@@ -1,5 +1,6 @@
 package com.thylovezj.mall.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.thylovezj.mall.common.ApiRestResponse;
 import com.thylovezj.mall.common.Constant;
 import com.thylovezj.mall.exception.ThylovezjMallException;
@@ -91,5 +92,19 @@ public class ProductAdminController {
         Product product = new Product();
         productService.delete(id);
         return ApiRestResponse.success();
+    }
+
+    @ApiOperation("批量上下架")
+    @PostMapping("admin/product/batchUpdateSellStatus")
+    public ApiRestResponse batchUpdateSellStatus(@RequestParam Integer[] ids, @RequestParam Integer sellStatus) {
+        productService.batchUpdateSellStatus(ids, sellStatus);
+        return ApiRestResponse.success();
+    }
+
+    @ApiOperation("后台商品列表接口")
+    @PostMapping("admin/product/list")
+    public ApiRestResponse list(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+        PageInfo pageInfo = productService.listForAdmin(pageNum, pageSize);
+        return ApiRestResponse.success(pageInfo);
     }
 }

@@ -16,6 +16,8 @@ public enum ThylovezjMallExceptionEnum {
     MKDIR_FAILED(10014, "文件夹创建失败"),
     DELETE_FAILED(10013, "删除失败"),
     UPLOAD_FAILED(10015, "图片上传失败"),
+    NOT_SALE(10016, "商品状态不可售"),
+    NOT_ENOUGH(10017, "商品库存不足"),
     NEED_ADMIN(10009, "无管理员权限");
 
     Integer code;
